@@ -12,7 +12,4 @@ class Operadora extends Model
     protected $table = 'operadora';
     protected $primaryKey = 'ope_codigo';
 
-    public function situacao(){
-        return $this->hasOne('App\Situacao', 'sit_codigo', 'sit_codigo');
-    }
 }

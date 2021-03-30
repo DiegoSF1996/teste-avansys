@@ -16,7 +16,8 @@ class CreateOperadora extends Migration
         Schema::create('operadora', function (Blueprint $table) {
             $table->bigIncrements('ope_codigo');
             $table->string('ope_descricao', 20);
-            $table->boolean('ope_observacao', 200);
+            $table->boolean('ope_status');
+            $table->string('ope_observacao', 200);
             $table->timestamps();
         });
     }
