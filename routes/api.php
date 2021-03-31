@@ -18,3 +18,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::post('listarOperadoras','OperadoraController@listarOperadoras');
+Route::post('salvar','OperadoraController@salvar');
+Route::post('excluirOperadoras','OperadoraController@excluirOperadoras');

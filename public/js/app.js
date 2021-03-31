@@ -2046,15 +2046,94 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      operadora: {
-        ope_codigo: "",
-        ope_descricao: "",
-        ope_status: "",
-        ope_observacao: ""
-      },
+      indice: 0,
+      operadoraSalvar: {},
+      checkbox: [],
+      operadoras: [],
       listar: {
         ope_codigo: "",
         ope_status: ""
@@ -2062,14 +2141,61 @@ __webpack_require__.r(__webpack_exports__);
       erros: []
     };
   },
+  mounted: function mounted() {
+    this.listarOperadoras();
+  },
   methods: {
-    listarOperadoras: function listarOperadoras() {
+    salvar: function salvar(operadora) {
       var _this = this;
 
-      axios.post('/api/listarOperadoras', this.listar).then(function () {
-        console.log('listou');
+      if (operadora.ope_status == undefined) {
+        operadora.ope_status = true;
+      }
+
+      console.log(operadora);
+      axios.post("/api/salvar", operadora).then(function (res) {
+        console.log(res.data);
       })["catch"](function (error) {
+        //console.log(error.response.data);
         _this.erros = error.response.data.errors;
+      });
+      this.operadoraSalvar = {};
+      this.listarOperadoras();
+    },
+    marcarTodos: function marcarTodos() {
+      var _this2 = this;
+
+      this.operadoras.forEach(function (op, indice) {
+        Vue.set(_this2.operadoras[indice], "ope_check", true);
+      });
+    },
+    excluir: function excluir() {
+      var _this3 = this;
+
+      axios.post("/api/excluirOperadoras", this.operadoras).then(function (res) {//console.log(res.data);
+      })["catch"](function (error) {
+        //console.log(error.response.data);
+        _this3.erros = error.response.data.errors;
+      });
+      this.listarOperadoras();
+    },
+    limpar: function limpar() {
+      this.operadoraSalvar = {};
+    },
+    listarOperadoras: function listarOperadoras() {
+      var _this4 = this;
+
+      axios.post("/api/listarOperadoras").then(function (res) {
+        _this4.operadoras = res.data;
+      })["catch"](function (error) {
+        _this4.erros = error.response.data.errors;
+      });
+    },
+    pop: function pop() {
+      this.operadoras.push({
+        ope_codigo: this.indice++,
+        ope_descricao: "CLARO",
+        ope_observacao: "ruim"
       });
     }
   }
@@ -37964,17 +38090,24 @@ var render = function() {
       )
     ]),
     _vm._v(" "),
-    _vm._m(0),
+    _c("div", { staticClass: "mb-3" }, [
+      _c(
+        "a",
+        {
+          staticClass: "btn btn-primary",
+          attrs: { href: "" },
+          on: {
+            click: function($event) {
+              $event.preventDefault()
+              return _vm.pop($event)
+            }
+          }
+        },
+        [_c("span", { staticClass: "fa fa-plus" }), _vm._v("teste")]
+      )
+    ]),
     _vm._v(" "),
-    _vm._m(1)
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "mb-3" }, [
+    _c("div", { staticClass: "mb-3" }, [
       _c(
         "div",
         {
@@ -37985,71 +38118,357 @@ var staticRenderFns = [
           _c("div", { staticClass: "mr-2" }, [
             _c(
               "button",
-              { staticClass: "btn btn-secondary", attrs: { type: "button" } },
-              [_vm._v("Marcar Todos")]
+              {
+                staticClass: "btn btn-secondary",
+                attrs: { type: "button" },
+                on: {
+                  click: function($event) {
+                    return _vm.marcarTodos()
+                  }
+                }
+              },
+              [_vm._v("\n          Marcar Todos\n        ")]
             )
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "mr-2" }, [
             _c(
               "button",
-              { staticClass: "btn btn-secondary", attrs: { type: "button" } },
-              [_vm._v("Excluir")]
+              {
+                staticClass: "btn btn-secondary",
+                attrs: { type: "button" },
+                on: {
+                  click: function($event) {
+                    return _vm.excluir()
+                  }
+                }
+              },
+              [_vm._v("\n          Excluir\n        ")]
             )
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "mr-2" }, [
             _c(
               "button",
-              { staticClass: "btn btn-secondary", attrs: { type: "button" } },
+              {
+                staticClass: "btn btn-secondary",
+                attrs: { type: "button" },
+                on: {
+                  click: function($event) {
+                    return _vm.habilitarDesabilitar()
+                  }
+                }
+              },
               [_vm._v("\n          Habilitar e Desabilitar\n        ")]
             )
           ])
         ]
       )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "mb-3" }, [
+      _c("table", { staticClass: "table" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c(
+          "tbody",
+          [
+            _c("tr", [
+              _c("td", [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-success",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.salvar(_vm.operadoraSalvar)
+                      }
+                    }
+                  },
+                  [_c("span", { staticClass: "fa fa-check fa-lg" })]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-danger",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.limpar()
+                      }
+                    }
+                  },
+                  [_c("span", { staticClass: "fa fa-times-circle fa-lg" })]
+                )
+              ]),
+              _vm._v(" "),
+              _c("td", [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.operadoraSalvar.ope_descricao,
+                      expression: "operadoraSalvar.ope_descricao"
+                    }
+                  ],
+                  attrs: { type: "text", name: "ope_descricao" },
+                  domProps: { value: _vm.operadoraSalvar.ope_descricao },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(
+                        _vm.operadoraSalvar,
+                        "ope_descricao",
+                        $event.target.value
+                      )
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("td", [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.operadoraSalvar.ope_observacao,
+                      expression: "operadoraSalvar.ope_observacao"
+                    }
+                  ],
+                  attrs: { type: "text", name: "ope_observacao" },
+                  domProps: { value: _vm.operadoraSalvar.ope_observacao },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(
+                        _vm.operadoraSalvar,
+                        "ope_observacao",
+                        $event.target.value
+                      )
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _vm._l(_vm.operadoras, function(operadora) {
+              return _c("tr", { key: operadora.ope_codigo }, [
+                _c("th", { attrs: { scope: "row" } }, [
+                  _c("div", { staticClass: "form-check" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: operadora.ope_check,
+                          expression: "operadora.ope_check"
+                        }
+                      ],
+                      staticClass: "form-check-input",
+                      attrs: {
+                        type: "checkbox",
+                        id: "c" + operadora.ope_check
+                      },
+                      domProps: {
+                        checked: Array.isArray(operadora.ope_check)
+                          ? _vm._i(operadora.ope_check, null) > -1
+                          : operadora.ope_check
+                      },
+                      on: {
+                        change: function($event) {
+                          var $$a = operadora.ope_check,
+                            $$el = $event.target,
+                            $$c = $$el.checked ? true : false
+                          if (Array.isArray($$a)) {
+                            var $$v = null,
+                              $$i = _vm._i($$a, $$v)
+                            if ($$el.checked) {
+                              $$i < 0 &&
+                                _vm.$set(
+                                  operadora,
+                                  "ope_check",
+                                  $$a.concat([$$v])
+                                )
+                            } else {
+                              $$i > -1 &&
+                                _vm.$set(
+                                  operadora,
+                                  "ope_check",
+                                  $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                                )
+                            }
+                          } else {
+                            _vm.$set(operadora, "ope_check", $$c)
+                          }
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "label",
+                      {
+                        staticClass: "form-check-label",
+                        attrs: { for: "c" + operadora.ope_codigo }
+                      },
+                      [
+                        _vm._v(
+                          "\n                Default checkbox\n              "
+                        )
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "custom-control custom-switch" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: operadora.ope_status,
+                          expression: "operadora.ope_status"
+                        }
+                      ],
+                      staticClass: "custom-control-input",
+                      attrs: {
+                        type: "checkbox",
+                        name: "ope_status",
+                        id: "s" + operadora.ope_codigo
+                      },
+                      domProps: {
+                        checked: Array.isArray(operadora.ope_status)
+                          ? _vm._i(operadora.ope_status, null) > -1
+                          : operadora.ope_status
+                      },
+                      on: {
+                        change: [
+                          function($event) {
+                            var $$a = operadora.ope_status,
+                              $$el = $event.target,
+                              $$c = $$el.checked ? true : false
+                            if (Array.isArray($$a)) {
+                              var $$v = null,
+                                $$i = _vm._i($$a, $$v)
+                              if ($$el.checked) {
+                                $$i < 0 &&
+                                  _vm.$set(
+                                    operadora,
+                                    "ope_status",
+                                    $$a.concat([$$v])
+                                  )
+                              } else {
+                                $$i > -1 &&
+                                  _vm.$set(
+                                    operadora,
+                                    "ope_status",
+                                    $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                                  )
+                              }
+                            } else {
+                              _vm.$set(operadora, "ope_status", $$c)
+                            }
+                          },
+                          function($event) {
+                            return _vm.salvar(operadora)
+                          }
+                        ]
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("label", {
+                      staticClass: "custom-control-label",
+                      attrs: { for: "s" + operadora.ope_codigo }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("td", [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: operadora.ope_descricao,
+                        expression: "operadora.ope_descricao"
+                      }
+                    ],
+                    attrs: { type: "text", name: "ope_descricao" },
+                    domProps: { value: operadora.ope_descricao },
+                    on: {
+                      change: function($event) {
+                        return _vm.salvar(operadora)
+                      },
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          operadora,
+                          "ope_descricao",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("td", [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: operadora.ope_observacao,
+                        expression: "operadora.ope_observacao"
+                      }
+                    ],
+                    attrs: { type: "text", name: "ope_descricao" },
+                    domProps: { value: operadora.ope_observacao },
+                    on: {
+                      change: function($event) {
+                        return _vm.salvar(operadora)
+                      },
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          operadora,
+                          "ope_observacao",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  })
+                ])
+              ])
+            })
+          ],
+          2
+        )
+      ])
     ])
-  },
+  ])
+}
+var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "mb-3" }, [
-      _c("table", { staticClass: "table" }, [
-        _c("thead", [
-          _c("tr", [
-            _c("th", { attrs: { scope: "col" } }),
-            _vm._v(" "),
-            _c("th", { attrs: { scope: "col" } }, [_vm._v("Operadora")]),
-            _vm._v(" "),
-            _c("th", { attrs: { scope: "col" } }, [_vm._v("Descrição")])
-          ])
-        ]),
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }),
         _vm._v(" "),
-        _c("tbody", [
-          _c("tr", [
-            _c("th", { attrs: { scope: "row" } }, [_vm._v("1")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("Mark")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("Otto")])
-          ]),
-          _vm._v(" "),
-          _c("tr", [
-            _c("th", { attrs: { scope: "row" } }, [_vm._v("2")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("Jacob")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("Thornton")])
-          ]),
-          _vm._v(" "),
-          _c("tr", [
-            _c("th", { attrs: { scope: "row" } }, [_vm._v("3")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("Larry")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("the Bird")])
-          ])
-        ])
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Operadora")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Descrição")])
       ])
     ])
   }
@@ -53828,8 +54247,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! c:\xampp\htdocs\teste-avansys\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! c:\xampp\htdocs\teste-avansys\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\teste-avansys\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\teste-avansys\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
