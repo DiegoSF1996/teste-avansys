@@ -1,5 +1,5 @@
-import Inicio from './viewsVue/inicio';
-import Sobre from './viewsVue/sobre';
+import cad_descricao from './viewsVue/cad_descricao';
+import cad_operadora from './viewsVue/cad_operadora';
 import NaoEncontrado from './viewsVue/NaoEncontrado.vue';
 
 
@@ -12,12 +12,12 @@ export default{
         },
         {
             path: '/',
-            component: Inicio
+            component: cad_descricao
         },
         {
-            path: '/sobre',
-            component: Sobre,
-            name: "sobre"
+            path: '/cad_operadora',
+            component: cad_operadora,
+            name: "cad_operadora"
         }
           
     ]

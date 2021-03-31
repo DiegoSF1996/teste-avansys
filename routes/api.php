@@ -20,3 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('listarOperadoras','OperadoraController@listarOperadoras');
 Route::post('salvar','OperadoraController@salvar');
 Route::post('excluirOperadoras','OperadoraController@excluirOperadoras');
+Route::get('lsOperadoras','DescricaoController@lsOperadoras');
+Route::post('lsDescricaoPorOperadora','DescricaoController@lsDescricaoPorOperadora');
+Route::post('salvarDescricao','DescricaoController@salvar');
+Route::post('excluirDescricoes','DescricaoController@excluirDescricoes');
