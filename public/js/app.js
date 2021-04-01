@@ -2192,6 +2192,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       })["catch"](function (error) {
         _this.erros = error.response.data.errors;
+        console.log(_this.erros);
       });
     },
     marcarTodos: function marcarTodos() {
@@ -2220,10 +2221,11 @@ __webpack_require__.r(__webpack_exports__);
     excluir: function excluir() {
       var _this4 = this;
 
-      axios.post("/api/excluirDescricoes", this.descricoes).then(function (res) {})["catch"](function (error) {
+      axios.post("/api/excluirDescricoes", this.descricoes).then(function (res) {
+        _this4.lsDescricaoPorOperadora();
+      })["catch"](function (error) {
         _this4.erros = error.response.data.errors;
       });
-      this.lsDescricaoPorOperadora();
     },
     limpar: function limpar() {
       this.descricaoSalvar = {};
@@ -2406,11 +2408,12 @@ __webpack_require__.r(__webpack_exports__);
     excluir: function excluir() {
       var _this3 = this;
 
-      axios.post("/api/excluirOperadoras", this.operadoras).then(function (res) {//console.log(res.data);
+      axios.post("/api/excluirOperadoras", this.operadoras).then(function (res) {
+        //console.log(res.data);
+        _this3.listarOperadoras();
       })["catch"](function (error) {
         _this3.erros = error.response.data.errors;
       });
-      this.listarOperadoras();
     },
     limpar: function limpar() {
       this.operadoraSalvar = {};
@@ -38222,7 +38225,7 @@ var render = function() {
           },
           [
             _c("option", { attrs: { selected: "", value: "" } }, [
-              _vm._v("--Selecione--")
+              _vm._v(" Todos ")
             ]),
             _vm._v(" "),
             _vm._l(_vm.operadoras, function(operadora) {

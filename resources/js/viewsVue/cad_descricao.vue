@@ -15,7 +15,7 @@
           v-model="filtros.ope_codigo"
           @change="lsDescricaoPorOperadora()"
         >
-          <option selected value="">--Selecione--</option>
+          <option selected value=""> Todos </option>
           <option
             v-for="operadora in operadoras"
             :key="operadora.ope_codigo"
@@ -218,7 +218,7 @@ export default {
       axios
         .post("/api/salvarDescricao", descricao)
         .then((res) => {
-          if (atualiza == true) {
+           if (atualiza == true) {
             this.descricaoSalvar.desc_descricao = null;
             this.descricoes = {};
             this.lsDescricaoPorOperadora();
@@ -226,7 +226,9 @@ export default {
         })
         .catch((error) => {
           this.erros = error.response.data.errors;
+          console.log(this.erros);
         });
+       
     },
     marcarTodos() {
       this.descricoes.forEach((op, indice) => {
@@ -249,11 +251,13 @@ export default {
     excluir() {
       axios
         .post("/api/excluirDescricoes", this.descricoes)
-        .then((res) => {})
+        .then((res) => {
+
+          this.lsDescricaoPorOperadora();
+        })
         .catch((error) => {
           this.erros = error.response.data.errors;
         });
-      this.lsDescricaoPorOperadora();
     },
     limpar() {
       this.descricaoSalvar = {};

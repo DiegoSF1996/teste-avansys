@@ -126,6 +126,7 @@ export default {
           //console.log(error.response.data);
           this.erros = error.response.data.errors;
         });
+        
     },
 
     excluir() {
@@ -133,11 +134,11 @@ export default {
         .post("/api/excluirOperadoras", this.operadoras)
         .then((res) => {
           //console.log(res.data);
+          this.listarOperadoras();
         })
         .catch((error) => {
           this.erros = error.response.data.errors;
         });
-      this.listarOperadoras();
     },
     limpar() {
       this.operadoraSalvar = {};

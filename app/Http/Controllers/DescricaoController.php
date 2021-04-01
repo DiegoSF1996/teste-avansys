@@ -35,7 +35,8 @@ class DescricaoController extends Controller
     function salvar(Request $req)
     {
 
-        $req->validate(['ope_codigo' => ['required'], 'desc_descricao' => ['required'],]);
+        $req->validate(['ope_codigo' => ['required'], 'desc_descricao' => ['required'],'desc_status' => ['required']]);
+       
         if (isset($req->desc_codigo)) {
             $oDescricao = Descricao::find($req->desc_codigo);
             $oDescricao->desc_descricao = $req->desc_descricao;
