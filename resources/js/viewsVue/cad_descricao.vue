@@ -84,112 +84,114 @@
     </div>
 
     <div class="mb-3">
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col"></th>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col"></th>
 
-            <th scope="col">Operadora</th>
+              <th scope="col">Operadora</th>
 
-            <th scope="col">Descrição</th>
-          </tr>
-        </thead>
+              <th scope="col">Descrição</th>
+            </tr>
+          </thead>
 
-        <tbody>
-          <tr>
-            <td>
-              <button
-                @click="salvar(descricaoSalvar, true)"
-                type="button"
-                class="btn btn-success"
-              >
-                <span class="fa fa-check fa-lg"></span>
-              </button>
-
-              <button @click="limpar()" type="button" class="btn btn-danger">
-                <span class="fa fa-times-circle fa-lg"></span>
-              </button>
-            </td>
-
-            <td>
-              <input
-                disabled
-                type="hidden"
-                v-model="descricaoSalvar.ope_codigo"
-                name="op_codigo"
-              />
-              <input
-                disabled
-                type="text"
-                v-model="descricaoSalvar.ope_descricao"
-                name="ope_descricao"
-              />
-            </td>
-
-            <td>
-              <input
-                type="text"
-                v-model="descricaoSalvar.desc_descricao"
-                name="desc_descricao"
-              />
-            </td>
-          </tr>
-
-          <tr v-for="descricao in descricoes" :key="descricao.desc_codigo">
-            <th scope="row">
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  v-model="descricao.desc_check"
-                  v-bind:id="'c' + descricao.desc_check"
-                />
-
-                <label
-                  class="form-check-label"
-                  v-bind:for="'c' + descricao.desc_codigo"
+          <tbody>
+            <tr>
+              <td>
+                <button
+                  @click="salvar(descricaoSalvar, true)"
+                  type="button"
+                  class="btn btn-success"
                 >
-                </label>
-              </div>
+                  <span class="fa fa-check fa-lg"></span>
+                </button>
 
-              <div class="custom-control custom-switch">
+                <button @click="limpar()" type="button" class="btn btn-danger">
+                  <span class="fa fa-times-circle fa-lg"></span>
+                </button>
+              </td>
+
+              <td>
                 <input
-                  type="checkbox"
-                  name="desc_status"
-                  v-model="descricao.desc_status"
-                  class="custom-control-input"
-                  v-bind:id="'s' + descricao.desc_codigo"
+                  disabled
+                  type="hidden"
+                  v-model="descricaoSalvar.ope_codigo"
+                  name="op_codigo"
+                />
+                <input
+                  disabled
+                  type="text"
+                  v-model="descricaoSalvar.ope_descricao"
+                  name="ope_descricao"
+                />
+              </td>
+
+              <td>
+                <input
+                  type="text"
+                  v-model="descricaoSalvar.desc_descricao"
+                  name="desc_descricao"
+                />
+              </td>
+            </tr>
+
+            <tr v-for="descricao in descricoes" :key="descricao.desc_codigo">
+              <th scope="row">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    v-model="descricao.desc_check"
+                    v-bind:id="'c' + descricao.desc_check"
+                  />
+
+                  <label
+                    class="form-check-label"
+                    v-bind:for="'c' + descricao.desc_codigo"
+                  >
+                  </label>
+                </div>
+
+                <div class="custom-control custom-switch">
+                  <input
+                    type="checkbox"
+                    name="desc_status"
+                    v-model="descricao.desc_status"
+                    class="custom-control-input"
+                    v-bind:id="'s' + descricao.desc_codigo"
+                    @change="salvar(descricao, true)"
+                  />
+
+                  <label
+                    class="custom-control-label"
+                    v-bind:for="'s' + descricao.desc_codigo"
+                  ></label>
+                </div>
+              </th>
+
+              <td>
+                <input
+                  type="text"
+                  name="desc_codigo"
+                  disabled
+                  v-model="descricao.ope_descricao"
                   @change="salvar(descricao, true)"
                 />
+              </td>
 
-                <label
-                  class="custom-control-label"
-                  v-bind:for="'s' + descricao.desc_codigo"
-                ></label>
-              </div>
-            </th>
-
-            <td>
-              <input
-                type="text"
-                name="desc_codigo"
-                disabled
-                v-model="descricao.ope_descricao"
-                @change="salvar(descricao, true)"
-              />
-            </td>
-
-            <td>
-              <input
-                type="text"
-                name="ope_descricao"
-                v-model="descricao.desc_descricao"
-                @change="salvar(descricao, true)"
-              />
-            </td>
-          </tr>
-        </tbody>
-      </table>
+              <td>
+                <input
+                  type="text"
+                  name="ope_descricao"
+                  v-model="descricao.desc_descricao"
+                  @change="salvar(descricao, true)"
+                />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </template>
@@ -276,9 +278,9 @@ export default {
           keyy
         ].ope_descricao;
         this.descricaoSalvar.ope_codigo = this.filtros.ope_codigo;
-      } else{
-          this.descricaoSalvar.ope_codigo = null;
-          this.descricaoSalvar.ope_descricao = null;
+      } else {
+        this.descricaoSalvar.ope_codigo = null;
+        this.descricaoSalvar.ope_descricao = null;
       }
       axios
         .post("/api/lsDescricaoPorOperadora", this.filtros)

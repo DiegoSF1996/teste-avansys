@@ -101,7 +101,6 @@
 export default {
   data() {
     return {
-
       operadoraSalvar: {},
       operadoras: [],
       erros: [],
@@ -117,18 +116,16 @@ export default {
       });
     },
     salvar(operadora, atualiza = false) {
-     
       axios
         .post("/api/salvar", operadora)
         .then((res) => {
-          console.log(res.data);
+          this.operadoraSalvar = {};
+          this.listarOperadoras();
         })
         .catch((error) => {
           //console.log(error.response.data);
           this.erros = error.response.data.errors;
         });
-      this.operadoraSalvar = {};
-      this.listarOperadoras();
     },
 
     excluir() {
@@ -138,8 +135,6 @@ export default {
           //console.log(res.data);
         })
         .catch((error) => {
-          console.log(error.response.data);
-
           this.erros = error.response.data.errors;
         });
       this.listarOperadoras();
@@ -153,7 +148,6 @@ export default {
         .post("/api/listarOperadoras")
         .then((res) => {
           this.operadoras = res.data;
-          console.log(res.data);
         })
         .catch((error) => {
           this.erros = error.response.data.errors;

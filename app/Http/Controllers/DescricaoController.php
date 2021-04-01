@@ -11,22 +11,22 @@ class DescricaoController extends Controller
     //
     function lsOperadoras()
     {
-        return response()->json(Operadora::All(), 200);
+        return response()->json(Operadora::orderBy('ope_codigo')->get(), 200);
     }
 
     function lsDescricaoPorOperadora(Request $req)
     {
-        if(!isset($req->ope_codigo)){
-            $oDescricao = Descricao::All();
+        if (!isset($req->ope_codigo)) {
+            $oDescricao = Descricao::orderBy('desc_codigo');
+        } else {
 
-        }else {
-
-            $oDescricao = Descricao::where('ope_codigo',$req->ope_codigo)->get();
+            $oDescricao = Descricao::where('ope_codigo', $req->ope_codigo);
         }
-        if(isset($req->desc_status)){
-            $oDescricao = Descricao::where('desc_status',$req->desc_status)->get();
+        if (isset($req->desc_status)) {
+            $oDescricao = $oDescricao->where('desc_status', $req->desc_status);
         }
-        foreach($oDescricao as $key => $value){
+        $oDescricao =  $oDescricao->get();
+        foreach ($oDescricao as $key => $value) {
             $oDescricao[$key]->ope_descricao = $value->operadora->ope_descricao;
         }
         return response()->json($oDescricao, 200);
@@ -49,16 +49,16 @@ class DescricaoController extends Controller
             ]);
         }
     }
-    function excluirDescricoes(Request $req){
+    function excluirDescricoes(Request $req)
+    {
         $descricoes = $req->All();
-        
-        foreach($descricoes as $descricao ){
-            if(isset($descricao['desc_check']) && $descricao['desc_check'] == true){
+
+        foreach ($descricoes as $descricao) {
+            if (isset($descricao['desc_check']) && $descricao['desc_check'] == true) {
 
                 $op = Descricao::find($descricao['desc_codigo'])->delete();
             }
         }
         return response()->json();
-
     }
 }

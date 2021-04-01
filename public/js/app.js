@@ -2157,6 +2157,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2393,20 +2395,19 @@ __webpack_require__.r(__webpack_exports__);
 
       var atualiza = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
       axios.post("/api/salvar", operadora).then(function (res) {
-        console.log(res.data);
+        _this2.operadoraSalvar = {};
+
+        _this2.listarOperadoras();
       })["catch"](function (error) {
         //console.log(error.response.data);
         _this2.erros = error.response.data.errors;
       });
-      this.operadoraSalvar = {};
-      this.listarOperadoras();
     },
     excluir: function excluir() {
       var _this3 = this;
 
       axios.post("/api/excluirOperadoras", this.operadoras).then(function (res) {//console.log(res.data);
       })["catch"](function (error) {
-        console.log(error.response.data);
         _this3.erros = error.response.data.errors;
       });
       this.listarOperadoras();
@@ -2419,7 +2420,6 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.post("/api/listarOperadoras").then(function (res) {
         _this4.operadoras = res.data;
-        console.log(res.data);
       })["catch"](function (error) {
         _this4.erros = error.response.data.errors;
       });
@@ -38364,243 +38364,42 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "mb-3" }, [
-      _c("table", { staticClass: "table" }, [
-        _vm._m(0),
-        _vm._v(" "),
-        _c(
-          "tbody",
-          [
-            _c("tr", [
-              _c("td", [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-success",
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        return _vm.salvar(_vm.descricaoSalvar, true)
-                      }
-                    }
-                  },
-                  [_c("span", { staticClass: "fa fa-check fa-lg" })]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-danger",
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        return _vm.limpar()
-                      }
-                    }
-                  },
-                  [_c("span", { staticClass: "fa fa-times-circle fa-lg" })]
-                )
-              ]),
-              _vm._v(" "),
-              _c("td", [
-                _c("input", {
-                  directives: [
+      _c("div", { staticClass: "table-responsive" }, [
+        _c("table", { staticClass: "table" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            [
+              _c("tr", [
+                _c("td", [
+                  _c(
+                    "button",
                     {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.descricaoSalvar.ope_codigo,
-                      expression: "descricaoSalvar.ope_codigo"
-                    }
-                  ],
-                  attrs: { disabled: "", type: "hidden", name: "op_codigo" },
-                  domProps: { value: _vm.descricaoSalvar.ope_codigo },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(
-                        _vm.descricaoSalvar,
-                        "ope_codigo",
-                        $event.target.value
-                      )
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.descricaoSalvar.ope_descricao,
-                      expression: "descricaoSalvar.ope_descricao"
-                    }
-                  ],
-                  attrs: { disabled: "", type: "text", name: "ope_descricao" },
-                  domProps: { value: _vm.descricaoSalvar.ope_descricao },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(
-                        _vm.descricaoSalvar,
-                        "ope_descricao",
-                        $event.target.value
-                      )
-                    }
-                  }
-                })
-              ]),
-              _vm._v(" "),
-              _c("td", [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.descricaoSalvar.desc_descricao,
-                      expression: "descricaoSalvar.desc_descricao"
-                    }
-                  ],
-                  attrs: { type: "text", name: "desc_descricao" },
-                  domProps: { value: _vm.descricaoSalvar.desc_descricao },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(
-                        _vm.descricaoSalvar,
-                        "desc_descricao",
-                        $event.target.value
-                      )
-                    }
-                  }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _vm._l(_vm.descricoes, function(descricao) {
-              return _c("tr", { key: descricao.desc_codigo }, [
-                _c("th", { attrs: { scope: "row" } }, [
-                  _c("div", { staticClass: "form-check" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: descricao.desc_check,
-                          expression: "descricao.desc_check"
-                        }
-                      ],
-                      staticClass: "form-check-input",
-                      attrs: {
-                        type: "checkbox",
-                        id: "c" + descricao.desc_check
-                      },
-                      domProps: {
-                        checked: Array.isArray(descricao.desc_check)
-                          ? _vm._i(descricao.desc_check, null) > -1
-                          : descricao.desc_check
-                      },
+                      staticClass: "btn btn-success",
+                      attrs: { type: "button" },
                       on: {
-                        change: function($event) {
-                          var $$a = descricao.desc_check,
-                            $$el = $event.target,
-                            $$c = $$el.checked ? true : false
-                          if (Array.isArray($$a)) {
-                            var $$v = null,
-                              $$i = _vm._i($$a, $$v)
-                            if ($$el.checked) {
-                              $$i < 0 &&
-                                _vm.$set(
-                                  descricao,
-                                  "desc_check",
-                                  $$a.concat([$$v])
-                                )
-                            } else {
-                              $$i > -1 &&
-                                _vm.$set(
-                                  descricao,
-                                  "desc_check",
-                                  $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                                )
-                            }
-                          } else {
-                            _vm.$set(descricao, "desc_check", $$c)
-                          }
+                        click: function($event) {
+                          return _vm.salvar(_vm.descricaoSalvar, true)
                         }
                       }
-                    }),
-                    _vm._v(" "),
-                    _c("label", {
-                      staticClass: "form-check-label",
-                      attrs: { for: "c" + descricao.desc_codigo }
-                    })
-                  ]),
+                    },
+                    [_c("span", { staticClass: "fa fa-check fa-lg" })]
+                  ),
                   _vm._v(" "),
-                  _c("div", { staticClass: "custom-control custom-switch" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: descricao.desc_status,
-                          expression: "descricao.desc_status"
-                        }
-                      ],
-                      staticClass: "custom-control-input",
-                      attrs: {
-                        type: "checkbox",
-                        name: "desc_status",
-                        id: "s" + descricao.desc_codigo
-                      },
-                      domProps: {
-                        checked: Array.isArray(descricao.desc_status)
-                          ? _vm._i(descricao.desc_status, null) > -1
-                          : descricao.desc_status
-                      },
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger",
+                      attrs: { type: "button" },
                       on: {
-                        change: [
-                          function($event) {
-                            var $$a = descricao.desc_status,
-                              $$el = $event.target,
-                              $$c = $$el.checked ? true : false
-                            if (Array.isArray($$a)) {
-                              var $$v = null,
-                                $$i = _vm._i($$a, $$v)
-                              if ($$el.checked) {
-                                $$i < 0 &&
-                                  _vm.$set(
-                                    descricao,
-                                    "desc_status",
-                                    $$a.concat([$$v])
-                                  )
-                              } else {
-                                $$i > -1 &&
-                                  _vm.$set(
-                                    descricao,
-                                    "desc_status",
-                                    $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                                  )
-                              }
-                            } else {
-                              _vm.$set(descricao, "desc_status", $$c)
-                            }
-                          },
-                          function($event) {
-                            return _vm.salvar(descricao, true)
-                          }
-                        ]
+                        click: function($event) {
+                          return _vm.limpar()
+                        }
                       }
-                    }),
-                    _vm._v(" "),
-                    _c("label", {
-                      staticClass: "custom-control-label",
-                      attrs: { for: "s" + descricao.desc_codigo }
-                    })
-                  ])
+                    },
+                    [_c("span", { staticClass: "fa fa-times-circle fa-lg" })]
+                  )
                 ]),
                 _vm._v(" "),
                 _c("td", [
@@ -38609,22 +38408,48 @@ var render = function() {
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: descricao.ope_descricao,
-                        expression: "descricao.ope_descricao"
+                        value: _vm.descricaoSalvar.ope_codigo,
+                        expression: "descricaoSalvar.ope_codigo"
                       }
                     ],
-                    attrs: { type: "text", name: "desc_codigo", disabled: "" },
-                    domProps: { value: descricao.ope_descricao },
+                    attrs: { disabled: "", type: "hidden", name: "op_codigo" },
+                    domProps: { value: _vm.descricaoSalvar.ope_codigo },
                     on: {
-                      change: function($event) {
-                        return _vm.salvar(descricao, true)
-                      },
                       input: function($event) {
                         if ($event.target.composing) {
                           return
                         }
                         _vm.$set(
-                          descricao,
+                          _vm.descricaoSalvar,
+                          "ope_codigo",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.descricaoSalvar.ope_descricao,
+                        expression: "descricaoSalvar.ope_descricao"
+                      }
+                    ],
+                    attrs: {
+                      disabled: "",
+                      type: "text",
+                      name: "ope_descricao"
+                    },
+                    domProps: { value: _vm.descricaoSalvar.ope_descricao },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.descricaoSalvar,
                           "ope_descricao",
                           $event.target.value
                         )
@@ -38639,22 +38464,19 @@ var render = function() {
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: descricao.desc_descricao,
-                        expression: "descricao.desc_descricao"
+                        value: _vm.descricaoSalvar.desc_descricao,
+                        expression: "descricaoSalvar.desc_descricao"
                       }
                     ],
-                    attrs: { type: "text", name: "ope_descricao" },
-                    domProps: { value: descricao.desc_descricao },
+                    attrs: { type: "text", name: "desc_descricao" },
+                    domProps: { value: _vm.descricaoSalvar.desc_descricao },
                     on: {
-                      change: function($event) {
-                        return _vm.salvar(descricao, true)
-                      },
                       input: function($event) {
                         if ($event.target.composing) {
                           return
                         }
                         _vm.$set(
-                          descricao,
+                          _vm.descricaoSalvar,
                           "desc_descricao",
                           $event.target.value
                         )
@@ -38662,11 +38484,201 @@ var render = function() {
                     }
                   })
                 ])
-              ])
-            })
-          ],
-          2
-        )
+              ]),
+              _vm._v(" "),
+              _vm._l(_vm.descricoes, function(descricao) {
+                return _c("tr", { key: descricao.desc_codigo }, [
+                  _c("th", { attrs: { scope: "row" } }, [
+                    _c("div", { staticClass: "form-check" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: descricao.desc_check,
+                            expression: "descricao.desc_check"
+                          }
+                        ],
+                        staticClass: "form-check-input",
+                        attrs: {
+                          type: "checkbox",
+                          id: "c" + descricao.desc_check
+                        },
+                        domProps: {
+                          checked: Array.isArray(descricao.desc_check)
+                            ? _vm._i(descricao.desc_check, null) > -1
+                            : descricao.desc_check
+                        },
+                        on: {
+                          change: function($event) {
+                            var $$a = descricao.desc_check,
+                              $$el = $event.target,
+                              $$c = $$el.checked ? true : false
+                            if (Array.isArray($$a)) {
+                              var $$v = null,
+                                $$i = _vm._i($$a, $$v)
+                              if ($$el.checked) {
+                                $$i < 0 &&
+                                  _vm.$set(
+                                    descricao,
+                                    "desc_check",
+                                    $$a.concat([$$v])
+                                  )
+                              } else {
+                                $$i > -1 &&
+                                  _vm.$set(
+                                    descricao,
+                                    "desc_check",
+                                    $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                                  )
+                              }
+                            } else {
+                              _vm.$set(descricao, "desc_check", $$c)
+                            }
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("label", {
+                        staticClass: "form-check-label",
+                        attrs: { for: "c" + descricao.desc_codigo }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "custom-control custom-switch" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: descricao.desc_status,
+                            expression: "descricao.desc_status"
+                          }
+                        ],
+                        staticClass: "custom-control-input",
+                        attrs: {
+                          type: "checkbox",
+                          name: "desc_status",
+                          id: "s" + descricao.desc_codigo
+                        },
+                        domProps: {
+                          checked: Array.isArray(descricao.desc_status)
+                            ? _vm._i(descricao.desc_status, null) > -1
+                            : descricao.desc_status
+                        },
+                        on: {
+                          change: [
+                            function($event) {
+                              var $$a = descricao.desc_status,
+                                $$el = $event.target,
+                                $$c = $$el.checked ? true : false
+                              if (Array.isArray($$a)) {
+                                var $$v = null,
+                                  $$i = _vm._i($$a, $$v)
+                                if ($$el.checked) {
+                                  $$i < 0 &&
+                                    _vm.$set(
+                                      descricao,
+                                      "desc_status",
+                                      $$a.concat([$$v])
+                                    )
+                                } else {
+                                  $$i > -1 &&
+                                    _vm.$set(
+                                      descricao,
+                                      "desc_status",
+                                      $$a
+                                        .slice(0, $$i)
+                                        .concat($$a.slice($$i + 1))
+                                    )
+                                }
+                              } else {
+                                _vm.$set(descricao, "desc_status", $$c)
+                              }
+                            },
+                            function($event) {
+                              return _vm.salvar(descricao, true)
+                            }
+                          ]
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("label", {
+                        staticClass: "custom-control-label",
+                        attrs: { for: "s" + descricao.desc_codigo }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: descricao.ope_descricao,
+                          expression: "descricao.ope_descricao"
+                        }
+                      ],
+                      attrs: {
+                        type: "text",
+                        name: "desc_codigo",
+                        disabled: ""
+                      },
+                      domProps: { value: descricao.ope_descricao },
+                      on: {
+                        change: function($event) {
+                          return _vm.salvar(descricao, true)
+                        },
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            descricao,
+                            "ope_descricao",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: descricao.desc_descricao,
+                          expression: "descricao.desc_descricao"
+                        }
+                      ],
+                      attrs: { type: "text", name: "ope_descricao" },
+                      domProps: { value: descricao.desc_descricao },
+                      on: {
+                        change: function($event) {
+                          return _vm.salvar(descricao, true)
+                        },
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            descricao,
+                            "desc_descricao",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ])
+              })
+            ],
+            2
+          )
+        ])
       ])
     ])
   ])

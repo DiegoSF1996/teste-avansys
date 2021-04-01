@@ -10,7 +10,7 @@ class OperadoraController extends Controller
     //
     function listarOperadoras(Request $req)
     {
-        $oOperadoras = Operadora::All();
+        $oOperadoras = Operadora::orderBy('ope_codigo')->get();
 
         if(isset($req->ope_codigo)){
             $oOperadoras =  $oOperadoras->where('ope_codigo',$req->ope_codigo);
